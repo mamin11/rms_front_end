@@ -54,7 +54,8 @@ export default {
                 name: name,
                 email: email
             }
-            this.$store.dispatch('deleteStudent', student)
+            this.$emit('deleteFromParent', student)
+            // this.$store.dispatch('deleteStudent', student)
         }
     },
     

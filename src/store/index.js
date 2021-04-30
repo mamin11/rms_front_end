@@ -31,7 +31,6 @@ export default new Vuex.Store({
     },
 
     addStudent ({ commit}, data) {
-      console.log(data)
       axios.post('http://localhost:8081/api/v1/student', {
         name: data.name,
         email: data.email,
@@ -42,16 +41,22 @@ export default new Vuex.Store({
         console.log(error.response.status)
       })
       .then(response => {
-        console.log(response)
+        console.log(response.status)
+
         commit('ADD_STUDENT', data)
+
+        //update the state after adding new student
+          axios.get('http://localhost:8081/api/v1/student')
+          .then(response => {
+            commit('SET_STUDENTS', response.data)
+          })
       })
     },
 
     deleteStudent({commit}, student) {
       axios.delete('http://localhost:8081/api/v1/student/' + student.id)
       .then(response => {
-        console.log(response)
-        // this.result.splice(id, 1)
+        console.log(response.status)
         commit('DELETE_STUDENT', student)
       });
     },

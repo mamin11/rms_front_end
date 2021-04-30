@@ -137,12 +137,19 @@ export default {
     methods: {
         addStudent() {
             //validate form
+
+            //dispatch action
             this.$store.dispatch('addStudent', this.formData)
+
+            //reset form
             this.formData = {
                 name: '',
                 email: '',
                 dob:'',
             }
+
+            //close modal
+            this.dialog = false
         },
     },
 
