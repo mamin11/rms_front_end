@@ -21,7 +21,7 @@
                 <v-btn
                     color="blue darken-1"
                     text
-                    @click="dialog = false"
+                    @click="deleteCancel"
                 >
                     Cancel
                 </v-btn>
@@ -70,6 +70,10 @@ export default {
     },
     deleteConfirm() {
         this.$store.dispatch('deleteStudent', this.deletingStudent)
+        this.dialog = false
+        this.deletingStudent = {}
+    },
+    deleteCancel(){
         this.dialog = false
         this.deletingStudent = {}
     }

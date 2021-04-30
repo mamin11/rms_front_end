@@ -6,25 +6,6 @@
     max-width="600px"
     >
 
-    <template v-slot:activator="{ on, attrs }">
-        <v-row class="text-center">
-            <v-col>
-                    <v-btn
-                    class="mx-2"
-                    fab
-                    dark
-                    color="indigo"
-                    v-bind="attrs"
-                    v-on="on"
-                >
-                    <v-icon dark>
-                    mdi-plus
-                    </v-icon>
-                </v-btn>
-            </v-col>
-        </v-row>
-    </template>
-
     <v-card>
         <v-card-title>
         <span class="headline">Student Details</span>
@@ -40,7 +21,7 @@
                 <v-text-field
                 label="First name*"
                 required
-                v-model="formData.firstname"
+                v-model="student.firstname"
                 ></v-text-field>
             </v-col>
             <v-col
@@ -50,7 +31,7 @@
             >
                 <v-text-field
                 label="Middle name"
-                v-model="formData.middlename"
+                v-model="student.middlename"
                 ></v-text-field>
             </v-col>
             <v-col
@@ -62,21 +43,21 @@
                 label="Last name*"
                 persistent-hint
                 required
-                v-model="formData.lastname"
+                v-model="student.lastname"
                 ></v-text-field>
             </v-col>
             <v-col cols="12">
                 <v-text-field
                 label="Email*"
                 required
-                v-model="formData.email"
+                v-model="student.email"
                 ></v-text-field>
             </v-col>
             <v-col cols="12">
                 <v-text-field
                 label="Telephone*"
                 required
-                v-model="formData.telephone"
+                v-model="student.telephone"
                 ></v-text-field>
             </v-col>
             <v-col
@@ -84,10 +65,11 @@
                 sm="6"
             >
                 <v-text-field
-                label="Date of Birth*"
-                required
-                type="date"
-                v-model="formData.dob"
+                    v-model="student.dob"
+                    label="Date of Birth*"
+                    type="date"
+                    prepend-icon="mdi-calendar"
+
                 ></v-text-field>
             </v-col>
             <v-col
@@ -98,7 +80,7 @@
                 :items="['Databases', 'Artificial Intelligence', 'Systems Design', 'Media Tech', 'Java', 'C++', 'Python', 'JavaScript', 'PHP']"
                 label="Courses"
                 multiple
-                v-model="formData.courses"
+                v-model="student.courses"
                 ></v-autocomplete>
             </v-col>
             </v-row>
@@ -110,14 +92,14 @@
         <v-btn
             color="red darken-1"
             text
-            @click="dialog = false"
+            @click="closeModal"
         >
             Close
         </v-btn>
         <v-btn
             color="blue darken-1"
             text
-            @click="addStudent"
+            @click="updateStudent"
         >
             Save
         </v-btn>
@@ -128,40 +110,47 @@
 </template>
 
 <script>
+import moment from 'moment'
 export default {
+
+    props: ['updatingStudent', 'status'],
+
     data: () => ({
-        dialog: false,
-        formData: {
-            firstname: '',
-            lastname: '',
-            middlename: '',
-            email: '',
-            telephone: '',
-            courses: [],
-            dob:'',
-        }
+        dialog: true,
+        student: {},
     }),
 
+    mounted() {
+        this.student = this.updatingStudent
+        console.log(this.updatingStudent)
+    },
+
     methods: {
-        addStudent() {
+        updateStudent() {
             //validate form
 
             //dispatch action
-            this.$store.dispatch('addStudent', this.formData)
+            this.student.dob = this.format_date(this.student.dob)
+            this.$store.dispatch('updateStudent', this.student)
 
             //reset form
-            this.formData = {
-                firstname: '',
-                lastname: '',
-                middlename: '',
-                email: '',
-                telephone: '',
-                courses: [],
-                dob:'',
-            }
+            this.$emit('resetUpdatingStudent')
 
             //close modal
             this.dialog = false
+            this.$emit('modalStatus', this.dialog)
+        },
+
+        closeModal() {
+            // this.status = false // cant update directly, emitting event to parent to change status
+            this.dialog = false
+            this.$emit('modalStatus', this.dialog)
+        },
+
+        format_date(value){
+            if (value) {
+            return moment(String(value)).format('YYYY-MM-DD')
+            }
         },
     },
 
