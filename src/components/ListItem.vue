@@ -9,7 +9,7 @@
         <v-card-text>Date of Birth: {{student.dob}}</v-card-text>
         <v-card-actions>
         <v-row class="mx-5 my-1">
-                <v-col>
+                <v-col class="d-flex justify-center">
                     <v-btn
                     class="mx-2"
                     fab
@@ -24,7 +24,7 @@
                     </v-icon>
                     </v-btn>
                 </v-col>
-                <v-col>
+                <v-col class="d-flex justify-center">
                     <v-btn
                     class="mx-2"
                     fab
