@@ -77,7 +77,7 @@
                 sm="6"
             >
                 <v-autocomplete
-                :items="['Databases', 'Artificial Intelligence', 'Systems Design', 'Media Tech', 'Java', 'C++', 'Python', 'JavaScript', 'PHP']"
+                :items="[...(courses.map(course => course.title))]"
                 label="Courses"
                 multiple
                 v-model="student.courses"
@@ -122,7 +122,14 @@ export default {
 
     mounted() {
         this.student = this.updatingStudent
+        this.$store.dispatch('getCourses')
         console.log(this.updatingStudent)
+    },
+
+    computed: {
+        courses() {
+            return this.$store.state.courses;
+        }
     },
 
     methods: {
