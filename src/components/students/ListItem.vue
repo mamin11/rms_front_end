@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import UpdateForm from '../components/UpdateForm'
+import UpdateForm from '../students/UpdateForm'
 
 export default {
     components: {

@@ -15,7 +15,7 @@
 <script>
 // import Students from "../components/Students";
 // import Navigation from "../components/Navigation";
-import CourseForm from '../components/CourseForm'
+import CourseForm from '../components/courses/CourseForm'
 import CourseList from '../components/courses/CourseList'
 
 export default {

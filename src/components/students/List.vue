@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import ListItem from '../components/ListItem'
+import ListItem from '../students/ListItem'
 export default {
     data () {
     return {
