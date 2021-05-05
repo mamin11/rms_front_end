@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Course from "../views/Course.vue";
+import Module from "../views/Module.vue";
 
 Vue.use(VueRouter);
 
@@ -24,7 +25,12 @@ const routes = [
     path: "/courses",
     name: "Course",
     component: Course
-  }
+  },
+  {
+    path: "/modules",
+    name: "Module",
+    component: Module
+  },
 ];
 
 const router = new VueRouter({

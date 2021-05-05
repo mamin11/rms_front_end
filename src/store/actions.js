@@ -135,3 +135,71 @@ export const deleteCourse = ({commit}, course) => {
         })
     });
 }
+
+//MODULES
+export const getModules = ({ commit }) => {
+    axios.get('http://localhost:8081/api/v1/module')
+    .then(response => {
+        commit('SET_MODULES', response.data)
+    })
+}
+
+export const addModule = ({ commit}, data) => {
+    axios.post('http://localhost:8081/api/v1/module', {
+        title: data.title,
+        course: data.course,
+        moduleContentLink: data.moduleContentLink,
+        startDate: data.startDate,
+    })
+    .catch((error) => {
+      // error.response.status Check status code
+        console.log(error.response)
+    })
+    .then(response => {
+        console.log(response.status)
+
+        commit('ADD_MODULE', data)
+
+      //update the state after adding new module
+        axios.get('http://localhost:8081/api/v1/module')
+        .then(response => {
+            commit('SET_MODULES', response.data)
+        })
+    })
+}
+
+export const updateModule = ({ commit }, module) => {
+    //put request
+    axios.put('http://localhost:8081/api/v1/module/'+ module.id
+    +'?title='+module.title
+    +'&course='+module.course
+    +'&moduleContentLink='+module.moduleContentLink
+    +'&startDate='+module.startDate)
+    .catch((error) => {
+        console.log(error.response)
+    })
+    .then(response => {
+        console.log(response.status)
+        
+        //get fresh data 
+        axios.get('http://localhost:8081/api/v1/module')
+        .then(response => {
+            commit('SET_MODULES', response.data)
+    })
+
+    })
+}
+
+export const deleteModule = ({commit}, module) => {
+    axios.delete('http://localhost:8081/api/v1/module/' + module.id)
+    .then(response => {
+        console.log(response.status)
+        commit('DELETE_MODULE', module)
+
+      //update the state 
+        axios.get('http://localhost:8081/api/v1/module')
+        .then(response => {
+            commit('SET_MODULES', response.data)
+        })
+    });
+}

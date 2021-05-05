@@ -33,6 +33,15 @@
     </v-btn>
     </router-link>
 
+    <router-link to="/modules">
+    <v-btn
+        depressed
+        color="primary"
+    >
+        Modules
+    </v-btn>
+    </router-link>
+
 
     <v-btn
     depressed
