@@ -43,11 +43,18 @@
             </v-col>
 
             <v-col cols="12">
-                <v-text-field
-                label="Module Content Link*"
-                required
-                v-model="formData.moduleContentLink"
-                ></v-text-field>
+                <v-row justify="center">
+                    <v-input
+                        error-count="2"
+                        error
+                        disabled
+                        class="text-center mx-auto pl-4"
+                    >
+                        Upload Module Content
+                    </v-input>
+                    <v-spacer></v-spacer>
+                    <input type="file" name="file" @change="getFile">
+                </v-row>
             </v-col>
 
             <v-col
@@ -104,7 +111,11 @@ export default {
             course: '',
             moduleContentLink: '',
             startDate: '',
-        }
+        },
+        inputFile: null,
+        data: {},
+        moduleTitle: '',
+        hasFile: false,
     }),
 
     mounted() {
@@ -118,9 +129,9 @@ export default {
     },
 
     methods: {
-        addModule() {
-            //dispatch action
-            this.$store.dispatch('addModule', this.formData)
+        async addModule() {
+            await this.saveModuleToDb()
+            this.moduleTitle = this.formData.title
 
             //reset form
             this.formData = {
@@ -133,7 +144,52 @@ export default {
 
             //close modal
             this.dialog = false
+
+            let moduleId = await this.getAddedModule()
+
+            //upload file if it exists
+            if(this.hasFile == true) {
+                this.uploadFile(moduleId)
+            }
         },
+
+        async saveModuleToDb() {
+            //dispatch action
+            await this.$store.dispatch('addModule', this.formData)
+        },
+
+        getFile(event) {
+            this.inputFile = event.target.files[0]
+            if(event.target.files.length > 0){
+                this.hasFile = true
+            }
+        },
+
+        uploadFile(id) {
+            const formData = new FormData();
+            formData.append("file", this.inputFile)
+            formData.append("moduleId", id) //change id to module ID
+            formData.append(
+                "headers", {
+                    "Content-Type": "multipart/form-data"
+                }
+            )
+            this.$store.dispatch('uploadFile', {data: formData, id: id})
+            this.inputFile = null
+        },
+
+        async getAddedModule() {
+            // console.log("formdata.title = " + this.moduleTitle)
+
+            //get the added module
+            await this.$store.dispatch('getModuleByTitle', this.moduleTitle)
+            let moduleId = await this.$store.state.modulesByTitle.id
+
+            // console.log(moduleId)
+            this.moduleTitle = ''
+            return moduleId
+        },
+
     },
 
 }

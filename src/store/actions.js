@@ -7,6 +7,25 @@ export const getStudents = ({ commit }) => {
     })
 }
 
+export const uploadFile = ({ commit}, {data, id}) => {
+    console.log(data)
+    axios.post('http://localhost:8081/api/v1/module/'+id+'/content/upload', data)
+    .catch((error) => {
+      // error.response.status Check status code
+        console.log(error.response)
+    })
+    .then(response => {
+        console.log(response.status)
+
+      //update the state after adding new module
+        axios.get('http://localhost:8081/api/v1/module')
+        .then(response => {
+            commit('SET_MODULES', response.data)
+        })
+
+    })
+}
+
 export const addStudent = ({ commit}, data) => {
     axios.post('http://localhost:8081/api/v1/student', {
         firstname: data.firstname,
@@ -24,7 +43,7 @@ export const addStudent = ({ commit}, data) => {
     .then(response => {
         console.log(response.status)
 
-        commit('ADD_STUDENT', data)
+        commit('', data)
 
       //update the state after adding new student
         axios.get('http://localhost:8081/api/v1/student')
@@ -144,8 +163,24 @@ export const getModules = ({ commit }) => {
     })
 }
 
-export const addModule = ({ commit}, data) => {
-    axios.post('http://localhost:8081/api/v1/module', {
+//get modules by course
+export const getModuleByCourse = ({ commit }, course) => {
+    axios.get('http://localhost:8081/api/v1/module/course/'+course)
+    .then(response => {
+        commit('SET_MODULES_BY_COURSE', response.data)
+    })
+}
+
+//get module by title  http://localhost:8081/api/v1/module/title/csy3040
+export const getModuleByTitle = async ({ commit }, title) => {
+    await axios.get('http://localhost:8081/api/v1/module/title/'+title)
+    .then(response => {
+        commit('SET_MODULES_BY_TITLE', response.data)
+    })
+}
+
+export const addModule = async ({ commit}, data) => {
+    await axios.post('http://localhost:8081/api/v1/module', {
         title: data.title,
         course: data.course,
         moduleContentLink: data.moduleContentLink,

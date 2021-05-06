@@ -1,5 +1,7 @@
 export default {
     students: [],
     courses: [],
-    modules: []
+    modules: [],
+    modulesByTitle: [],
+    modulesByCourse: [],
 }

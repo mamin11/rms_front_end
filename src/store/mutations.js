@@ -10,6 +10,14 @@ export const SET_MODULES = (state, modules) => {
     state.modules = modules
 }
 
+export const SET_MODULES_BY_TITLE = (state, modules) => {
+    state.modulesByTitle = modules
+}
+
+export const SET_MODULES_BY_COURSE = (state, modules) => {
+    state.modulesByCourse = modules
+}
+
 export const ADD_STUDENT = (state, student) => {
     state.students.push(student)
 }
