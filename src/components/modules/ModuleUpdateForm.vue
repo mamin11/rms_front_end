@@ -24,11 +24,18 @@
             </v-col>
 
             <v-col cols="12">
-                <v-text-field
-                label="Module Content Link*"
-                required
-                v-model="moduleData.moduleContentLink"
-                ></v-text-field>
+                <v-row justify="center">
+                    <v-input
+                        error-count="2"
+                        error
+                        disabled
+                        class="text-center mx-auto pl-4"
+                    >
+                        Upload Module Content
+                    </v-input>
+                    <v-spacer></v-spacer>
+                    <input type="file" name="file" @change="getFile">
+                </v-row>
             </v-col>
 
             <v-col
@@ -83,6 +90,8 @@ export default {
     data: () => ({
         dialog: true,
         moduleData: {},
+        inputFile: null,
+        hasFile: false,
     }),
 
     mounted() {
@@ -98,6 +107,11 @@ export default {
 
     methods: {
         updateModule() {
+            //upload file if it exists
+            if(this.hasFile == true) {
+                this.uploadFile(this.moduleData.id)
+            }
+
             //dispatch action
             this.moduleData.startDate = this.format_date(this.moduleData.startDate)
             this.$store.dispatch('updateModule', this.moduleData)
@@ -119,6 +133,26 @@ export default {
             if (value) {
             return moment(String(value)).format('YYYY-MM-DD')
             }
+        },
+        
+        getFile(event) {
+            this.inputFile = event.target.files[0]
+            if(event.target.files.length > 0){
+                this.hasFile = true
+            }
+        },
+
+        uploadFile(id) {
+            const formData = new FormData();
+            formData.append("file", this.inputFile)
+            formData.append("moduleId", id)
+            formData.append(
+                "headers", {
+                    "Content-Type": "multipart/form-data"
+                }
+            )
+            this.$store.dispatch('uploadFile', {data: formData, id: id})
+            this.inputFile = null
         },
     },
 
