@@ -1,7 +1,7 @@
 # Records Management System
 A school rms that allows for the management of student and course records.
 
-<img src="/imgs/modules.png"/>
+<img src="/public/imgs/modules.jpg"/>
 
 The application supports the creation, deletion, updating and displaying of students, courses and modules.
 Modules belong to courses and students can take one or more courses.
