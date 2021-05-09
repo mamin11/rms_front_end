@@ -12,6 +12,13 @@
         <v-icon
           small
           class="mr-2"
+          @click="play(item)"
+        >
+          mdi-eye
+        </v-icon>
+        <v-icon
+          small
+          class="mr-2"
           @click="editModule(item)"
         >
           mdi-pencil
@@ -60,26 +67,30 @@
 
   <ModuleUpdateForm v-if="showUpdateModal" :updatingModule="updatingModule" @modalStatus="modalStatus" @resetUpdatingModule="resetUpdatingModule" />
 
+  <VideoPlayer v-if="showVideoPlayer" @videoPlayerStatus="videoPlayerStatus" :videoLink="videoLink" :videoId="videoId" />
+
 </v-container>
 </template>
 
 <script>
 import ModuleUpdateForm from './ModuleUpdateForm'
+import VideoPlayer from './VideoPlayer'
   export default {
     components: {
-      ModuleUpdateForm
+      ModuleUpdateForm, VideoPlayer
     },
 
     data: () => ({
       dialog: false,
       dialogDelete: false,
       showUpdateModal: false,
+      showVideoPlayer: false,
       formData: {
             title: '',
             startDate: '',
-    },
-    deletingModule: {},
-    updatingModule: {},
+      },
+      deletingModule: {},
+      updatingModule: {},
       headers: [
         {
           text: 'Title',
@@ -92,6 +103,8 @@ import ModuleUpdateForm from './ModuleUpdateForm'
         { text: 'StartDate', value: 'startDate' },
         { text: 'Actions', value: 'actions', sortable: false },
       ],
+      videoLink: '',
+      videoId: ''
     }),
 
     computed: {
@@ -132,7 +145,17 @@ import ModuleUpdateForm from './ModuleUpdateForm'
       },
       resetUpdatingModule() {
         this.updatingModule = {}
-      }
+      },
+
+      play(module) {
+        // console.log(module.moduleContentLink)
+        this.videoId = module.id
+        this.videoLink = module.moduleContentLink
+        this.showVideoPlayer = true
+      },
+      videoPlayerStatus(status){
+        this.showVideoPlayer = status
+      },
     },
   }
 </script>

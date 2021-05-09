@@ -4,4 +4,5 @@ export default {
     modules: [],
     modulesByTitle: [],
     modulesByCourse: [],
+    moduleVideoLink: null,
 }

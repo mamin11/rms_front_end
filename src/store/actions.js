@@ -26,6 +26,22 @@ export const uploadFile = ({ commit}, {data, id}) => {
     })
 }
 
+export const getVideoLink = ({commit}, id) => {
+    axios.get('http://localhost:8081/api/v1/module/'+id+'/content/download')
+    .catch((error) => {
+        console.log(error)
+    })
+    .then(response => {
+        // console.log('video link found************')
+        // console.log(response.data.httpRequest.uri)
+        commit('SET_MODULE_VIDEO', response.data.httpRequest.uri)
+    })
+}
+
+export const resetVideoLink = ({commit}) => {
+    commit('RESET_MODULE_VIDEO')
+}
+
 export const addStudent = ({ commit}, data) => {
     axios.post('http://localhost:8081/api/v1/student', {
         firstname: data.firstname,

@@ -44,3 +44,11 @@ export const DELETE_MODULE = (state, module) => {
     let index = state.modules.indexOf(module)
     state.modules.splice(index, 1)
 }
+
+export const SET_MODULE_VIDEO = (state, link) => {
+    state.moduleVideoLink = link
+}
+
+export const RESET_MODULE_VIDEO = (state) => {
+    state.moduleVideoLink = null
+}
