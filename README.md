@@ -15,24 +15,5 @@ The API provides endpoints for perfoming CRUD on the database.
 It has also being configured to upload module contents to an Amazon S3 bucket.
 Some of the configuration files for s3 have not been included in the repo as they contained personal credentials.
 
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
+![Alt Text](/public/imgs/giff.gif)
 

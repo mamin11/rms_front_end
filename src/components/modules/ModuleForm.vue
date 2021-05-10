@@ -150,6 +150,7 @@ export default {
             //upload file if it exists
             if(this.hasFile == true) {
                 this.uploadFile(moduleId)
+                this.hasFile = false
             }
         },
 
