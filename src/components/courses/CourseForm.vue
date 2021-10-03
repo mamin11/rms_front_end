@@ -72,6 +72,7 @@
             color="blue darken-1"
             text
             @click="addCourse"
+            disabled
         >
             Save
         </v-btn>

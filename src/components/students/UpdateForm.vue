@@ -100,6 +100,7 @@
             color="blue darken-1"
             text
             @click="updateStudent"
+            disabled
         >
             Save
         </v-btn>

@@ -118,6 +118,7 @@
             color="blue darken-1"
             text
             @click="addStudent"
+            disabled
         >
             Save
         </v-btn>

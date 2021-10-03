@@ -57,6 +57,7 @@
                     color="red darken-1"
                     text
                     @click="deleteConfirm"
+                    disabled
                 >
                     Delete
                 </v-btn>

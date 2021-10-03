@@ -48,6 +48,7 @@
             color="blue darken-1"
             text
             @click="updateCourse"
+            disabled
         >
             Save
         </v-btn>

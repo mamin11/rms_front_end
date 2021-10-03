@@ -74,6 +74,7 @@
             color="blue darken-1"
             text
             @click="updateModule"
+            disabled
         >
             Save
         </v-btn>

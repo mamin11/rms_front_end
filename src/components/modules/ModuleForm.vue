@@ -93,6 +93,7 @@
             color="blue darken-1"
             text
             @click="addModule"
+            disabled
         >
             Save
         </v-btn>
